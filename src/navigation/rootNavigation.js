@@ -21,7 +21,7 @@ const App_Stack = createStackNavigator({
          headerBackImage:()=>false,
     
          headerStyle: {
-            backgroundColor:'#fff',   
+            backgroundColor:'#fff',
         }, 
                 
        // headerRight:()=>  <NotificationIcon navigationProps={navigation}/>,

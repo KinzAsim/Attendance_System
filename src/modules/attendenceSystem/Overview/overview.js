@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 //import {TableView} from "react-native-responsive-table"
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {
   SafeAreaView,
@@ -61,7 +62,9 @@ class HomeScreen extends React.Component{
   onClick_Daily = () => {
     console.log('Daily')
   }
-
+  static navigationOption = {
+    title:'Overview'
+  }
   render(){
     const state = this.state;
 

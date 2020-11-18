@@ -6,11 +6,12 @@ import { colors } from '../style';
 import HomeScreen from '../modules/attendenceSystem/Overview/overview';
 import LogsScreen from '../modules/attendenceSystem/logs/logs';
 import SettingScreen from '../modules/attendenceSystem/settings/settings';
+import DetailScreen from '../modules/attendenceSystem/details/details';
 // import graphScreen from '../modules/tankMonitorinSystem/charts/graphs';
 // import alertScreen from '../modules/tankMonitorinSystem/alerts/recentAlerts';
 const iconSetting = require('../../assets/images/tabbar/pages.png')
 const iconHome = require('../../assets/images/tabbar/home.png');
-const iconMantain = require('../../assets/images/tabbar/alert.png');
+const iconDetail = require('../../assets/images/tabbar/details.png');
 const iconGraphs = require('../../assets/images/tabbar/chart.png');
 const iconComponents = require('../../assets/images/tabbar/components.png');
 const iconCalendar = require('../../assets/images/tabbar/calendar.png');
@@ -38,7 +39,14 @@ export default createBottomTabNavigator(
       screen: SettingScreen,
       navigationOptions: {
         title: 'Settings',
-        headerLeft: null
+        headerLeft: null,      
+      },
+    }, 
+    Details: {
+      screen: DetailScreen,
+      navigationOptions: {
+        title: 'Details',
+        headerLeft: null,      
       },
     }, 
     
@@ -55,11 +63,14 @@ export default createBottomTabNavigator(
             iconSource = iconHome;
             break;
           case 'Logs':
-            iconSource = iconSetting;
+            iconSource = iconCalendar;
             break;
           case 'Settings':
             iconSource = iconSetting;
             break;
+          case 'Details':
+              iconSource = iconDetail;
+              break;
           default:
             iconSource = iconComponents;
         }
