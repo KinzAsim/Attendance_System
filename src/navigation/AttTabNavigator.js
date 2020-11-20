@@ -9,12 +9,12 @@ import SettingScreen from '../modules/attendenceSystem/settings/settings';
 import DetailScreen from '../modules/attendenceSystem/details/details';
 // import graphScreen from '../modules/tankMonitorinSystem/charts/graphs';
 // import alertScreen from '../modules/tankMonitorinSystem/alerts/recentAlerts';
-const iconSetting = require('../../assets/images/tabbar/pages.png')
-const iconHome = require('../../assets/images/tabbar/home.png');
-const iconDetail = require('../../assets/images/tabbar/details.png');
-const iconGraphs = require('../../assets/images/tabbar/chart.png');
+const iconSetting = require('../../assets/images/tabbar/pages1.png')
+const iconHome = require('../../assets/images/tabbar/home2.png');
+const iconDetail = require('../../assets/images/tabbar/detail1.png');
+const iconGraphs = require('../../assets/images/tabbar/chart1.png');
 const iconComponents = require('../../assets/images/tabbar/components.png');
-const iconCalendar = require('../../assets/images/tabbar/calendar.png');
+const iconCalendar = require('../../assets/images/tabbar/calender2.png');
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // const hederBackground = require('../../../assets/images/topBarBg.png');
 
@@ -28,10 +28,10 @@ export default createBottomTabNavigator(
         headerLeft: null
       },
     }, 
-    Logs: {
+    Employees: {
       screen: LogsScreen,
       navigationOptions: {
-        title: 'Logs',
+        title: 'Employees',
         headerLeft: null
       },
     }, 
@@ -62,7 +62,7 @@ export default createBottomTabNavigator(
           case 'Home':
             iconSource = iconHome;
             break;
-          case 'Logs':
+          case 'Employees':
             iconSource = iconCalendar;
             break;
           case 'Settings':
@@ -91,11 +91,11 @@ export default createBottomTabNavigator(
     tabBarOptions: {
       showLabel: true,
       style: {
-        backgroundColor:'#fff'
+        backgroundColor:'#E64A19'
       },
       labelStyle: {
-        color: '#E64A19',
-        shadowColor:'#000',
+        color: '#fff',
+        shadowColor:'#fff',
         fontSize:15
       },
     },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     height: 23,
   },
   tabBarIconFocused: {
-    tintColor: '#E64A19',
+    tintColor: '#fff',
   },
   headerContainer: {
     height: 70,

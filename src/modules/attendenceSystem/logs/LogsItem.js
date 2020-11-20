@@ -15,7 +15,8 @@ class Item extends React.Component{
     }
 
     render() {
-        const {created_at,name} = this.props;       
+        const {emp_id,name,title} = this.props; 
+        console.log('name',title)      
         return(
           <View style={{flex:1,padding:15,marginLeft:wp('2%')}}>
             <View style={{flexDirection:'row'}}>
@@ -24,32 +25,12 @@ class Item extends React.Component{
             source={icon}
             />
               <View style={{marginLeft:wp('3%')}}>
-                <Text style={{color:'#000'}}>Kinza Asim</Text>
-                <Text style={styles.title} numberOfLines={1}>292 </Text>
+                <Text style={{color:'#000'}}>{name}</Text>
+                <Text style={styles.title} numberOfLines={1}>{emp_id} </Text>
               </View>            
             </View>
             <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%')}}/>
           </View>
-        //   <View
-        //     //key={item.id}
-        //     style={styles.itemThreeContainer}
-        //     //onPress={() => this._openArticle(item)}
-        //     >
-        //   <View style={styles.itemThreeSubContainer}>
-        //     <View style={styles.itemThreeContent}>
-        //       <View style={{flexDirection: 'row'}}>
-        //         {/* <Text style={styles.title}>{name}</Text> */}
-        //         <Text style={{color:'#000'}}>Kinza Asim</Text>                
-        //       </View>
-        //       <View style={{flexDirection: 'row',marginLeft:wp('15%')}}>
-        //         <Text style={styles.title} numberOfLines={1}>292 </Text>
-        //       </View>
-              
-        //     <View>                 
-        //   </View>
-        // </View>
-        //     </View>
-        //   </View>
           
         );
     }

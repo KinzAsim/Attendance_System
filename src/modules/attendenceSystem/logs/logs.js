@@ -13,95 +13,102 @@ import {
 import { colors } from '../../../style';
 import Item from './LogsItem';
 import { Divider } from 'react-native-elements';
+import {getEmpList} from '../../../redux/actions/AttAction';
+import {connect} from 'react-redux';
 
 const background = require("../../../../assets/images/background.jpg")
+
 class LogScreen extends React.Component{
   constructor(props){
     super(props);
     this.state={
       DATA:[{
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
-          },
-          {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            name: 'Second Item',
-          },
-          {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            name: 'Third Item',
-          },
-          {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
-          },
-          {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            name: 'Second Item',
-          },
-          {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            name: 'Third Item',
-          },
-          {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            name: 'Third Item',
-          },
-          {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
-          },
-          {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            name: 'Second Item',
-          },
-          {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            name: 'Third Item',
-          },
-          {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            name: 'Third Item',
-          },
-          {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
-          },
-          {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            name: 'Second Item',
-          },
-          {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            name: 'Third Item',
+          //   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          //   name: 'First Item',
+          // },
+          // {
+          //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          //   name: 'Second Item',
+          // },
+          // {
+          //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          //   name: 'Third Item',
+          // },
+          // {
+          //   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          //   name: 'First Item',
+          // },
+          // {
+          //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          //   name: 'Second Item',
+          // },
+          // {
+          //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          //   name: 'Third Item',
+          // },
+          // {
+          //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          //   name: 'Third Item',
+          // },
+          // {
+          //   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          //   name: 'First Item',
+          // },
+          // {
+          //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          //   name: 'Second Item',
+          // },
+          // {
+          //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          //   name: 'Third Item',
+          // },
+          // {
+          //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          //   name: 'Third Item',
+          // },
+          // {
+          //   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+          //   name: 'First Item',
+          // },
+          // {
+          //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+          //   name: 'Second Item',
+          // },
+          // {
+          //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
+          //   name: 'Third Item',
           }]
     }
     
   }
  
- 
+  async componentDidMount () {
+        this.props.getEmpList();
+        //console.log('list')
+      }
   render(){
     const{DATA} = this.state;
+    const{attendance} = this.props;
+    console.log('attendance',attendance)
+
     return(     
       // <View style={{flex:1,backgroundColor:'#bf360c'}}>
       // <View style={{borderBottomLeftRadius:90,backgroundColor:'#FFCCBC',flex:0.4}}> 
       // <View style={{backgroundColor:'#fff',flex:0.4,borderBottomLeftRadius:90}}></View>
       // </View>
-      // <View style={{borderBottomLeftRadius:90,backgroundColor:'transparent',flex:1}}>
-      //  
+      // <View style={{borderBottomLeftRadius:90,backgroundColor:'transparent',flex:1}}> 
       // </View>  
       // </View>
       <View style={styles.container}>
       <ImageBackground source={background} style={{height:'100%'
       }}>
-         <Text style={{marginHorizontal:wp('5%'),marginVertical:hp('3%'),fontSize:20,fontWeight:'bold'}}>Employee List:</Text>
+      <Text style={{marginHorizontal:wp('5%'),marginVertical:hp('3%'),fontSize:20,fontWeight:'bold'}}>Employee List:</Text>
       <SafeAreaView>
       <FlatList                             
-      data={ DATA }                               
-      renderItem={({item}) => <Item/>}
+      data={ attendance }                               
+      renderItem={({item}) => <Item name={item.name} emp_id={item.emp_id}/>}
       keyExtractor={(item, index) => index.toString()}
       />
-      
         </SafeAreaView>
       </ImageBackground>
     </View>
@@ -125,5 +132,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LogScreen;
+const mapStateToProps = (state) => ({
+  attendance : state.attendance.attendance
+      })
+
+ export default  connect(mapStateToProps,{getEmpList})(LogScreen);
 

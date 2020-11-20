@@ -2,22 +2,29 @@ import React from 'react';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 //import {TableView} from "react-native-responsive-table"
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
+  Image,
   TouchableOpacity,
   StatusBar,
   ViewBase,
 } from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements'
 
-class HomeScreen extends React.Component{
+
+const background = require("../../../../assets/images/A.logo.png")
+
+class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false,
       tableHead: ['Name', 'Id', 'Status'],
       tableData: [
         ['Kinza Asim', '2', '3'],
@@ -60,57 +67,149 @@ class HomeScreen extends React.Component{
   }
 
   onClick_Daily = () => {
+    this.setState({
+      visible:true
+    })
     console.log('Daily')
   }
-  static navigationOption = {
-    title:'Overview'
+  onBack_Daily = () => {
+    this.setState({
+      visible:false
+    })
+    console.log('Daily')
   }
-  render(){
+  // static navigationOption = {
+  //   title: 'Overview'
+  // }
+  render() {
     const state = this.state;
 
-    return(
-      <View style={{flex:1, marginBottom:hp('2%')}}> 
-      <View style={{flexDirection:'row',marginHorizontal:wp('9%')}}>
-      <TouchableOpacity style={styles.btn} onPress={()=>this.onClick_Daily()}>
-        <Text style={{color:'#fff'}}>DAILY SUMMARY</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={styles.btn} >
-        <Text style={{color:'#fff'}}>MONTHLY SUMMARY</Text>
-        </TouchableOpacity> 
+    return (
+      <View style={styles.container}>
+        <Image source={background} style={styles.image}></Image>
+
+        <Card containerStyle={styles.cardMainContainer}>
+          <Text style={styles.heading1}>Summary</Text>
+          <TouchableOpacity style={[styles.btn, { marginTop: hp('3%') }]} onPress={() => this.onClick_Daily()}>
+          <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.onBack_Daily()}
+            fullScreen={true} 
+            // backdropStyle={{padding:20}}
+            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
+            <View>
+            <Text style={{marginBottom:hp('2%'),fontWeight:'bold'}}>Daily Attendance Summary:</Text>
+            <ScrollView style={styles.container1}>
+            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+            <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
+            <Rows data={state.tableData} textStyle={styles.text}/>
+            </Table>
+            </ScrollView>
+            </View>
+            </Overlay>
+            <Text style={styles.btnText}>DAILY SUMMARY</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.btn} onPress={() => this.onClick_Daily()} >
+          <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.onBack_Daily()}
+            fullScreen={true} 
+            // backdropStyle={{padding:20}}
+            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
+              <View>
+              <Text style={{marginBottom:hp('2%'),fontWeight:'bold'}}>Monthly Attendance Summary:</Text>
+              <ScrollView style={styles.container1}>
+              <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+              <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
+              <Rows data={state.tableData} textStyle={styles.text}/>
+              </Table>
+              </ScrollView>
+              </View>
+           
+            </Overlay>
+            <Text style={styles.btnText}>MONTHLY SUMMARY</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.heading2}>Custom :</Text>
+
+          <View style={{ flexDirection: 'row', marginTop: hp('0.5%'), justifyContent: 'center' }}>
+            <Text style={[styles.DatePickerText, { marginTop: hp('1.5%') }]}>Start: </Text>
+            <DatePicker
+              style={styles.DatePicker}
+              // date={StartDate}
+              mode="date"
+              display="default"
+              placeholder="select date"
+              format="YYYY-MM-DD"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateInput: styles.DatePickerInput,
+                dateIcon: styles.DatePickerIcon,
+                dateText: styles.DateText
+
+                // ... You can check the source to find the other keys.
+              }}
+              onDateChange={(date) => { startDateChange(date) }}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', marginTop: hp('1%'), justifyContent: 'center' }}>
+            <Text style={[styles.DatePickerText, { marginTop: hp('1.5%') }]}>  End: </Text>
+            <DatePicker
+              style={styles.DatePicker}
+              // date={EndDate}
+              mode="date"
+              display="default"
+              placeholder="select date"
+              format="YYYY-MM-DD"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              customStyles={{
+                dateInput: styles.DatePickerInput,
+                dateIcon: styles.DatePickerIcon,
+                dateText: styles.DateText
+                ,
+                // ... You can check the source to find the other keys.
+              }}
+              onDateChange={(date) => { endDateChange(date) }}
+            />
+          </View>
+        </Card>
       </View>
-      
-      <ScrollView style={styles.container}>
-      <Table borderStyle={{borderWidth: 2, borderColor: '#f1f8ff'}}>
-        <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
-        <Rows data={state.tableData} textStyle={styles.text}/>
-      </Table>
-    </ScrollView>
-    <View style={{flexDirection:'row',marginTop:hp('2%')}}>
-    <Text style={{marginHorizontal:wp('7%'),fontSize:17}}>Total Absent:4</Text>
-    <Text style={{marginHorizontal:wp('7%'),fontSize:17}}>Total Present:8</Text>
-    <Text style={{marginHorizontal:wp('7%'),fontSize:17}}>Total Late:3</Text>
-    </View>
-      </View>
-      
     );
   }
 }
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: {  padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 40, backgroundColor: '#f1f8ff' },
-  text: { margin: 6 },
-  btn :{
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#E64A19',
-    width: wp('40%'),
-    height: hp('6%'),
-    borderRadius: 30,
-    marginBottom: 10,
-    marginTop: hp('5%'),
-    borderWidth: 1,
-    borderColor: '#fff'
+  container: { flex: 1, backgroundColor: '#fff', alignItems: 'center' },
+  container1: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+  image:{width: wp('80%'), height: hp('40%'), marginRight: wp('4%')},
+  cardMainContainer:{
+    flex: 0.9, width: wp('85%'), backgroundColor: '#fff', borderRadius: 20, elevation: 5, shadowRadius: 20, alignItems: 'center'
   },
+  heading1:{fontWeight: 'bold', marginBottom: hp('1.5%'), fontSize: hp('2.5%'), alignSelf: 'center'},
+  heading2:{fontWeight: 'bold', marginTop: hp('1%')},
+  btn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E64A19',
+    width: wp('60%'),
+    height: hp('6%'),
+    borderRadius: 12,
+    //marginBottom: 10, 
+    borderWidth: 1,
+    borderColor: '#fff',
+    marginVertical: hp('1%')
+  },
+  btnText:{color: '#fff', fontWeight: 'bold'},
+  datePickerView: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+  DatePicker: { width: wp('37%'), marginLeft: wp('1%') },
+  DatePickerText: { marginLeft: wp('3%'), color: "#E64A19", fontWeight: 'bold' },
+  DatePickerInput: { marginLeft: wp('0%'), height: hp('3%') },
+  DatePickerIcon: { top: hp('0%'), marginLeft: wp('0%') },
+  DateText: { color: "#800080" },
+  head: { height: 40, backgroundColor: '#f1f8ff' },
+  text: { margin: 6 }
 })

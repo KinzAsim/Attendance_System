@@ -2,7 +2,21 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import home from '../modules/attendenceSystem/Overview/overview';
+import login from '../modules/auth/login';
 import AttTabNavigator from './AttTabNavigator';
+
+
+const Auth_Stack = createStackNavigator({
+    auth: {
+        screen: login,        
+    },   
+   
+},
+{
+    defaultNavigationOptions:()=>({
+        headerShown:false
+    })
+});
 
 const App_Stack = createStackNavigator({
     home: {
@@ -22,11 +36,9 @@ const App_Stack = createStackNavigator({
     
          headerStyle: {
             backgroundColor:'#fff',
-        }, 
-                
+        },          
        // headerRight:()=>  <NotificationIcon navigationProps={navigation}/>,
-        //headerLeft:()=>  <ProfileIcon navigationProps={navigation}/>         
-      
+    //headerLeft:()=>  <ProfileIcon navigationProps={navigation}/>               
         }),
     },
     {
@@ -39,10 +51,11 @@ const App_Stack = createStackNavigator({
 export default createAppContainer(
     createSwitchNavigator(
         {
+        auth:Auth_Stack,   
         App:App_Stack,
         },
         {
-            initialRouteName:'App',
+            initialRouteName:'auth',
         }
  )
 );

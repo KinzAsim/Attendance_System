@@ -15,18 +15,32 @@ import {
   ScrollView,
   View,
   Text,
+  ActivityIndicator,
   TouchableOpacity,
   StatusBar,
 } from 'react-native';
 import Navigation from './src/navigation/rootNavigation';
-
+import {Provider} from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/redux/store';
 
 class App extends React.Component{
  
   render(){
     const state = this.state;
     return(
-      <Navigation/>
+      <Provider store={store}>
+    <PersistGate
+      loading={
+        <View style={styles.container}>
+          <ActivityIndicator color={'orange'} />
+        </View>
+      }
+      persistor={persistor}
+    >
+      <Navigation />
+    </PersistGate>
+  </Provider>
     );
   }
 }
