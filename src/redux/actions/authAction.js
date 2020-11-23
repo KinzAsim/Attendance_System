@@ -47,7 +47,7 @@ export const loadUser = (token) => {
     }
     axios.get(`${url}/user/auth`, config)
     .then(res=>{
-       //console.log('loaduserdata',res.data);
+      // console.log('loaduserdata',res.data);
         dispatch({
             type:'USER_LOADED',
             payload:res.data

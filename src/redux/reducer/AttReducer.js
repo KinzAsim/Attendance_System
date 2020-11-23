@@ -1,6 +1,9 @@
 const initState = {
     AttLoading:false,
     attendance:[],
+    setLoading:false,
+    setttings:[],
+
 };
 
 const AttReducer = (state = initState, action) => {
@@ -10,23 +13,38 @@ const AttReducer = (state = initState, action) => {
         case 'GET_EMPLOYEES':
             return {
               ...state,
-              AttLoading: true
+              AttLoading: true 
             } 
         case 'UPDATE_EMPLOYEES':
+           // console.log('reducer',action.payload)
             return {
                 ...state,
                 AttLoading: false,
                 attendance:action.payload
             }
-        case 'GET_EMPLOYEES':
+        case 'GET_EMPLOYEE_SET':
             return {
                 ...state,
+                setLoading:true
 
             }
-        case 'UPDATE_EMPLOYEES':
+        case 'UPDATE_EMPLOYEE_SET':
             return {
                 ...state,
-                    
+                setLoading:false,
+                setLoading:action.payload    
+            }
+        case 'GET_AUTOMODE':
+            return {
+              ...state,
+              setLoading: true 
+            } 
+        case 'UPDATE_AUTO_MODE':
+           // console.log('reducer',action.payload)
+            return {
+                ...state,
+                setLoading: false,
+                setttings:action.payload
             }
         default: 
             return state;   

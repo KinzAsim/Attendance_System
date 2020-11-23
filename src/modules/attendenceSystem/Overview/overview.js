@@ -24,7 +24,8 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visible1: false,
+      visible2:false,
       tableHead: ['Name', 'Id', 'Status'],
       tableData: [
         ['Kinza Asim', '2', '3'],
@@ -68,13 +69,25 @@ class HomeScreen extends React.Component {
 
   onClick_Daily = () => {
     this.setState({
-      visible:true
+      visible1:true
     })
     console.log('Daily')
   }
+  onClick_Monthly = () => {
+    this.setState({
+      visible2:true
+    })
+    console.log('Monthly')
+  }
   onBack_Daily = () => {
     this.setState({
-      visible:false
+      visible1:false
+    })
+    console.log('Daily')
+  }
+  onBack_Monthly = () => {
+    this.setState({
+      visible2:false
     })
     console.log('Daily')
   }
@@ -87,33 +100,32 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image source={background} style={styles.image}></Image>
-
         <Card containerStyle={styles.cardMainContainer}>
           <Text style={styles.heading1}>Summary</Text>
           <TouchableOpacity style={[styles.btn, { marginTop: hp('3%') }]} onPress={() => this.onClick_Daily()}>
-          <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.onBack_Daily()}
+          <Overlay isVisible={this.state.visible1} onBackdropPress={()=>this.onBack_Daily()}
             fullScreen={true} 
             // backdropStyle={{padding:20}}
-            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
-            <View>
-            <Text style={{marginBottom:hp('2%'),fontWeight:'bold'}}>Daily Attendance Summary:</Text>
-            <ScrollView style={styles.container1}>
+            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30,paddingBottom:hp('5%')}}>
+          <View style={{flex:1}}>
+          <Text style={{marginBottom:hp('1%'),fontWeight:'bold'}}>Daily Attendance Summary:</Text>
+          <ScrollView style={styles.container1}>
             <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
             <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
             <Rows data={state.tableData} textStyle={styles.text}/>
             </Table>
-            </ScrollView>
+          </ScrollView>
             </View>
             </Overlay>
             <Text style={styles.btnText}>DAILY SUMMARY</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.btn} onPress={() => this.onClick_Daily()} >
-          <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.onBack_Daily()}
+          <TouchableOpacity style={styles.btn}onPress={() => this.onClick_Monthly()}>
+          <Overlay isVisible={this.state.visible2} onBackdropPress={()=>this.onBack_Monthly()}
             fullScreen={true} 
             // backdropStyle={{padding:20}}
             overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
-              <View>
+              <View style={{flex:1}}>
               <Text style={{marginBottom:hp('2%'),fontWeight:'bold'}}>Monthly Attendance Summary:</Text>
               <ScrollView style={styles.container1}>
               <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
@@ -180,13 +192,12 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', alignItems: 'center' },
-  container1: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  image:{width: wp('80%'), height: hp('40%'), marginRight: wp('4%')},
-  cardMainContainer:{
-    flex: 0.9, width: wp('85%'), backgroundColor: '#fff', borderRadius: 20, elevation: 5, shadowRadius: 20, alignItems: 'center'
+  container1: { flex: 1,  paddingTop: 20, backgroundColor: '#fff',paddingBottom:hp('3%')},
+  image:{width: wp('80%'), height: hp('30%'), marginRight: wp('4%')},
+  cardMainContainer:{width: wp('85%'), backgroundColor: '#fff', borderRadius: 20, elevation: 5, shadowRadius: 20, alignItems: 'center',height:hp('45%')
   },
-  heading1:{fontWeight: 'bold', marginBottom: hp('1.5%'), fontSize: hp('2.5%'), alignSelf: 'center'},
-  heading2:{fontWeight: 'bold', marginTop: hp('1%')},
+  heading1:{fontWeight: 'bold', marginBottom: hp('1%'), fontSize: hp('2.5%'), alignSelf: 'center'},
+  heading2:{fontWeight: 'bold', marginTop: hp('0.5%')},
   btn: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -210,6 +221,6 @@ const styles = StyleSheet.create({
   DatePickerInput: { marginLeft: wp('0%'), height: hp('3%') },
   DatePickerIcon: { top: hp('0%'), marginLeft: wp('0%') },
   DateText: { color: "#800080" },
-  head: { height: 40, backgroundColor: '#f1f8ff' },
-  text: { margin: 6 }
+  head: {height: 40, backgroundColor: '#f1f8ff' },
+  text: { margin:4,fontSize:12 }
 })

@@ -33,14 +33,14 @@ class LoginScreen extends React.Component{
    }
 
     handleSubmit = () => {  
-    //console.log('Done')
       const {email,password} = this.state;
       this.props.login(email,password);
       
     
   }
   render(){
-   // console.log('Done')
+    const{email,password}=this.state;
+    //console.log('Done',email,password)
     return(      
         <KeyboardAvoidingView 
                           style={styles.conatiner}>   
@@ -77,7 +77,8 @@ class LoginScreen extends React.Component{
                        </TouchableOpacity> 
                     
                        <TouchableOpacity style={styles.loginbtn1} onPress={()=>this.handleSubmit()}>
-                          <Text style={{color:'#fff',fontWeight:'bold'}}>Don't have an account? Sign Up</Text>
+                          <Text style={{color:'#fff',fontWeight:'bold', justifyContent:'center',
+                          alignItems:'center',}}>Don't have an account? Sign Up</Text>
                        </TouchableOpacity> 
                        
            </KeyboardAvoidingView>                                                     
@@ -109,23 +110,22 @@ class LoginScreen extends React.Component{
                     backgroundColor:'#ffccbb',
                     width: wp('80%'),
                     height:hp('7%'),
-                    marginTop:20,
+                    marginTop:10,
                     paddingHorizontal:20,
                     fontSize: 15,
 
                   },
                   
                   iconView:{
-                    marginBottom:hp('10%'),
-                    width: 120,
-                    height: 120,
+                    marginBottom:hp('5%'),
+                    width: wp('34%'),
+                    height: hp('19.5%'),
                     borderRadius:60,
+                    justifyContent:'center',
+                    alignItems:'center',
                     backgroundColor:colors.background,                  
                     shadowColor:'#000',
-                    justifyContent: 'center',
-                    alignItems: 'center',
                     elevation: 20,
-                    padding:24
                   },
                   
                   loginbtn :{
@@ -135,7 +135,7 @@ class LoginScreen extends React.Component{
                     width: wp('70%'),
                     height: hp('6%'),
                     borderRadius: 30,
-                    marginBottom: 10,
+                    marginBottom: 5,
                     marginTop: 50,
                     borderWidth: 1,
                     borderColor: '#fff'
@@ -146,9 +146,7 @@ class LoginScreen extends React.Component{
                     backgroundColor:'transparent',
                     width: wp('70%'),
                     height: hp('6%'),
-                    borderRadius: 30,
-                    marginTop: 30,
-                    borderWidth: 1,
+                    marginTop: 10,
                     borderColor: 'transparent'
                   },
                   icon:{

@@ -14,8 +14,8 @@ class AuthLoadingScreen extends React.Component {
     if(this.props !== prevProps){
         const{isAuthenticated} = this.props;
         if(isAuthenticated){
-            //    console.log('authenticated')
-               this.props.navigation.navigate('App');
+            //console.log('authenticated')
+            this.props.navigation.navigate('App');
            }
        }
     }

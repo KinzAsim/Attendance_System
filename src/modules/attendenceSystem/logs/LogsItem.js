@@ -15,8 +15,9 @@ class Item extends React.Component{
     }
 
     render() {
-        const {emp_id,name,title} = this.props; 
-        console.log('name',title)      
+        const {emp_id,name} = this.props; 
+        console.log('name',name) 
+
         return(
           <View style={{flex:1,padding:15,marginLeft:wp('2%')}}>
             <View style={{flexDirection:'row'}}>
@@ -24,9 +25,16 @@ class Item extends React.Component{
             style={{width:wp('7%'),height:hp('3.5%'),marginRight:wp('2%')}}
             source={icon}
             />
-              <View style={{marginLeft:wp('3%')}}>
-                <Text style={{color:'#000'}}>{name}</Text>
-                <Text style={styles.title} numberOfLines={1}>{emp_id} </Text>
+            <View style={{marginLeft:wp('3%')}}>
+              <View style={{flexDirection:'row'}}>
+              <Text style={{color:'#000',marginRight:wp('1%'),fontWeight: 'bold'}}>Name:</Text>
+              <Text style={{color:'#000'}}>{name}</Text>
+              </View>
+
+              <View style={{flexDirection:'row'}}>
+              <Text style={{color:'#000',marginRight:wp('1%'),fontWeight: 'bold'}}>Id:</Text> 
+              <Text style={styles.title} numberOfLines={1}>{emp_id} </Text>
+              </View>
               </View>            
             </View>
             <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%')}}/>
@@ -78,6 +86,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.primaryRegular,
     fontSize: hp('1.8%'),
     color: '#000',
-    fontWeight: 'bold'
+    
   }
 });
