@@ -34,7 +34,6 @@ const authReducer = (state = initState, action) => {
                 isLoading : false
             }
             case 'SIGN_OUT':
-                console.log('here')
             return {
                 ...state,
                 token : null,

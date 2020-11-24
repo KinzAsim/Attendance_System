@@ -71,25 +71,24 @@ class HomeScreen extends React.Component {
     this.setState({
       visible1:true
     })
-    console.log('Daily')
+   
   }
   onClick_Monthly = () => {
     this.setState({
       visible2:true
     })
-    console.log('Monthly')
+   
   }
   onBack_Daily = () => {
     this.setState({
       visible1:false
     })
-    console.log('Daily')
   }
   onBack_Monthly = () => {
     this.setState({
       visible2:false
     })
-    console.log('Daily')
+    
   }
   // static navigationOption = {
   //   title: 'Overview'

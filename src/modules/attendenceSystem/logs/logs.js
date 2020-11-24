@@ -34,16 +34,16 @@ class LogScreen extends React.Component{
  
   async componentDidMount () {
         await this.props.getEmpList();
-        //console.log('list')
+       
       }
   render(){
     const{DATA} = this.state;
-    const{attendance,AttLoading} = this.props;
-    console.log('Attendance',AttLoading)
+    const{employees,empLoading} = this.props;
+    
 
   return( 
         <>         
-          {AttLoading ? (
+          {empLoading ? (
             <View style={{flex:1, alignItems:'center',justifyContent:'center',backgroundColor:'white'}}>
             <ActivityIndicator size="large" color="#ff3d00"/>
             </View>):(
@@ -52,7 +52,7 @@ class LogScreen extends React.Component{
               <Text style={{marginHorizontal:wp('5%'),marginVertical:hp('3%'),fontSize:20,fontWeight:'bold'}}>Employee List:</Text>
               <SafeAreaView>
               <FlatList                             
-              data={ attendance }                               
+              data={ employees }                               
               renderItem={({item}) => <Item name={item.name} emp_id={item.emp_id}/>}
               keyExtractor={(item, index) => index.toString()}
               />
@@ -66,8 +66,8 @@ class LogScreen extends React.Component{
     }
   
 const mapStateToProps = (state) => ({
-  attendance : state.attendance.attendance,
-  AttLoading: state.attendance.AttLoading
+  employees : state.attendance.employees,
+  empLoading: state.attendance.employeesLoading
       })
 
 export default  connect(mapStateToProps,{getEmpList})(LogScreen);

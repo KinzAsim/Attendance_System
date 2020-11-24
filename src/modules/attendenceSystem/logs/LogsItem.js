@@ -16,7 +16,7 @@ class Item extends React.Component{
 
     render() {
         const {emp_id,name} = this.props; 
-        console.log('name',name) 
+       
 
         return(
           <View style={{flex:1,padding:15,marginLeft:wp('2%')}}>

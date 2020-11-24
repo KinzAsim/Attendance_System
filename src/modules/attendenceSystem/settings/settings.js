@@ -4,7 +4,7 @@ import { Card } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { colors } from '../../../style';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { autoMode,threshold} from '../../../redux/actions/AttAction';
+import { autoMode, threshold, changeMode, getThreshold, Learn} from '../../../redux/actions/AttAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 const SettingScreen = () => {
@@ -15,12 +15,20 @@ const SettingScreen = () => {
   const [mode, setMode] = useState('time');
   const [showOut, setShowOut] = useState(false);
   const [showIn, setShowIn] = useState(false);
-  const [ShowAbsent,setShowAbsent] = useState(false);
+  const [ShowAbsent, setShowAbsent] = useState(false);
   const [ShowLate, setShowLate] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const setttings = useSelector((state) => state.attendance.setttings);
   const setLoading = useSelector((state) => state.attendance.setLoading);
+  const checkIn_Out = useSelector((state) => state.attendance.checkIn_Out);
+  const checkLoading = useSelector((state) => state.attendance.checkLoading);
+  const threshold = useSelector((state) => state.attendance.thresholds);
+  const thresholdLoading = useSelector((state) => state.attendance.thresholdLoading);
+ 
+  useEffect(() => {
+    dispatch(getThreshold());
+  }, [])
 
   const CheckIn = () => {
     openModeInPicker('time');
@@ -71,16 +79,26 @@ const SettingScreen = () => {
     setShowAbsent(true);
     setMode(currentMode);
   };
-  
+
   const handleSubmitAutoMode = () => {
-    dispatch(autoMode(checkIntime,checkOutTime));
-    //console.log('submit',checkIntime,checkOutTime)
+    dispatch(autoMode(checkIntime, checkOutTime));
+
   }
   const handleSubmitAttThreshold = () => {
-    dispatch(threshold(lateThreshold,absentThreshold));
-    //console.log('submit',checkIntime,checkOutTime)
-  }
+    dispatch(threshold(lateThreshold, absentThreshold));
 
+  }
+  const handleModeChange = () => {
+    if (threshold.check === 1){
+      dispatch(changeMode(0));
+    }
+    else if (threshold.check === 0){
+      dispatch(changeMode(1));
+    }
+  }
+const handleLearn = () => {
+  dispatch(Learn());
+}
   //  render(){
   //    //const{setttings}=this.props;
   return (
@@ -97,9 +115,9 @@ const SettingScreen = () => {
             height: hp('6%'), marginTop: hp('10%'), marginLeft: wp('7%'), borderColor: 'white', borderWidth: 1, justifyContent: 'center', width: wp('60%'),
             backgroundColor: '#fff', borderRadius: 10
           }}
-          onChangeText={text => onChangeText1(text)}
+          //onChangeText={text => onChangeText1(text)}
           placeholder='Employee Name*'
-        //value={value}
+          //value={value}
         />
 
         <TextInput
@@ -107,14 +125,15 @@ const SettingScreen = () => {
             height: hp('6%'), marginTop: hp('2%'), marginLeft: wp('7%'), borderColor: 'white', borderWidth: 1, justifyContent: 'center', width: wp('60%')
             , borderRadius: 10, backgroundColor: '#fff'
           }}
-          onChangeText={text => onChangeText2(text)}
+          //onChangeText={text => onChangeText2(text)}
           placeholder='Employee Id*'
-        //value={value}
+          //value={value}
         />
         {/* </Card>  */}
 
         {/* <Card.Divider/>  */}
-        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('8%') }}>
+        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('8%') }}
+        onPress={()=>handleLearn()}>
           <Text style={{ marginHorizontal: wp('4%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18 }}>
             Change Mode To Learn
                 </Text>
@@ -164,7 +183,7 @@ const SettingScreen = () => {
           {absentThreshold !== undefined ? absentThreshold.toTimeString() : ''}
         </Text>
         <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }}
-          onPress={()=>handleSubmitAttThreshold()}>
+          onPress={() => handleSubmitAttThreshold()}>
           <Text style={{ marginHorizontal: wp('4%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('9%') }}>
             Submit Times
                 </Text>
@@ -211,7 +230,7 @@ const SettingScreen = () => {
             {checkOutTime !== undefined ? checkOutTime.toTimeString() : ''}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }} onPress={()=>handleSubmitAutoMode()}>
+        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }} onPress={() => handleSubmitAutoMode()}>
           <Text style={{ marginHorizontal: wp('4%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('9%') }}>
             Submit Times
                 </Text>
@@ -222,12 +241,22 @@ const SettingScreen = () => {
       >
         <Card.Title style={styles.cardTitle}>Current Mode: </Card.Title>
         <Card.Divider />
-        <Text style={{ alignSelf: 'center', fontSize: 30, color: '#fff', marginTop: hp('10%') }}>Check in</Text>
+        {threshold.check === 1 ? (<Text style={{ alignSelf: 'center', fontSize: 30, color: '#fff', marginTop: hp('10%') }}>Check In</Text>
+        ) : (
+            <Text style={{ alignSelf: 'center', fontSize: 30, color: '#fff', marginTop: hp('10%') }}>Check Out</Text>
+          )}
+
         <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('10%') }}
-        >
-          <Text style={{ marginHorizontal: wp('1%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('5%') }}>
+          onPress={() => handleModeChange()}>
+            {threshold.check === 1 ? (<Text style={{ marginHorizontal: wp('1%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('5%') }}>
             Change To Check Out
-                </Text>
+          </Text>
+          ):(
+            <Text style={{ marginHorizontal: wp('1%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('5%') }}>
+            Change To Check In
+          </Text>
+          )}
+          
         </TouchableOpacity>
       </Card>
     </ScrollView>

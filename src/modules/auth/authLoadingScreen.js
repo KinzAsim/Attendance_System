@@ -14,7 +14,7 @@ class AuthLoadingScreen extends React.Component {
     if(this.props !== prevProps){
         const{isAuthenticated} = this.props;
         if(isAuthenticated){
-            //console.log('authenticated')
+           
             this.props.navigation.navigate('App');
            }
        }
@@ -22,7 +22,7 @@ class AuthLoadingScreen extends React.Component {
 
      submitAsync = async () => {
         let userToken = await AsyncStorage.getItem('userToken');
-        console.log('token',userToken);
+       
                   if(userToken){
                      await this.props.loadUser(userToken);
                      this.props.navigation.navigate('App');

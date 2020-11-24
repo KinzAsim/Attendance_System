@@ -1,8 +1,16 @@
+
+
 const initState = {
-    AttLoading:false,
-    attendance:[],
+    employeesLoading:false,
+    employees:[],
     setLoading:false,
     setttings:[],
+    checkIn_Out:false,
+    checkLoading:[],
+    thresholds:[],
+    thresholdLoading:false,
+    summary:[],
+    summaryLoading:false
 
 };
 
@@ -10,41 +18,71 @@ const AttReducer = (state = initState, action) => {
     let index=-1;
     
     switch(action.type){
-        case 'GET_EMPLOYEES':
+        case 'EMPLOYEES_LOADING':
             return {
               ...state,
-              AttLoading: true 
+              employeesLoading: true 
             } 
-        case 'UPDATE_EMPLOYEES':
-           // console.log('reducer',action.payload)
+        case 'GET_EMPLOYEES':
+           
             return {
                 ...state,
-                AttLoading: false,
-                attendance:action.payload
+                employeesLoading: false,
+                employees:action.payload
             }
-        case 'GET_EMPLOYEE_SET':
+        case 'EMPLOYEE_SET_LOADING':
             return {
                 ...state,
                 setLoading:true
 
             }
-        case 'UPDATE_EMPLOYEE_SET':
+        case 'GET_EMPLOYEE_SET':
             return {
                 ...state,
                 setLoading:false,
                 setLoading:action.payload    
             }
-        case 'GET_AUTOMODE':
+        case 'AUTOMODE_LOADING':
             return {
               ...state,
               setLoading: true 
             } 
-        case 'UPDATE_AUTO_MODE':
-           // console.log('reducer',action.payload)
+        case 'GET_AUTO_MODE':
+          
             return {
                 ...state,
                 setLoading: false,
                 setttings:action.payload
+            }
+        case 'CHECK_LOADING':
+            return {
+              ...state,
+              checkLoading: true 
+            } 
+        case 'UPDATE_CHECK':
+            return {
+                ...state,
+                thresholds:
+                {
+                    check:action.payload
+                }
+            }
+        case 'THRESHOLD_LOADING':
+            return {
+                ...state,
+                thresholdLoading: true
+
+            }
+        case 'GET_THRESHOLD':
+            return {
+                ...state,
+                thresholdLoading: false,
+                thresholds:action.payload
+            }
+        case 'SUMMARY_LOADING':
+            return {
+                ...state,
+                summaryLoading:action.payload
             }
         default: 
             return state;   

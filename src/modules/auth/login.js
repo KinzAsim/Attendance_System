@@ -40,7 +40,7 @@ class LoginScreen extends React.Component{
   }
   render(){
     const{email,password}=this.state;
-    //console.log('Done',email,password)
+    
     return(      
         <KeyboardAvoidingView 
                           style={styles.conatiner}>   

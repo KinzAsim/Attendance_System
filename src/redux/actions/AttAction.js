@@ -2,9 +2,9 @@ import axios from 'axios';
 import {url} from './types';
 
 export const getEmpList = () => (dispatch,getState) => new Promise(async function (resolve,reject){
-  //  console.log('employee')
+  
     dispatch({
-        type:'GET_EMPLOYEES'
+        type:'EMPLOYEES_LOADING'
     })
     const config = {
         headers: {
@@ -13,10 +13,10 @@ export const getEmpList = () => (dispatch,getState) => new Promise(async functio
     }
     try{
         const data = await axios.get(`${url}/attendance/employees`,config)
-         console.log('data',data.data)
+        
 
         dispatch({
-            type:'UPDATE_EMPLOYEES',
+            type:'GET_EMPLOYEES',
             payload:data.data.data
         })
         resolve('done');
@@ -27,10 +27,11 @@ export const getEmpList = () => (dispatch,getState) => new Promise(async functio
     }
 })
 
-export const getEmpSettings = () => (dispatch,getState) => new Promise(async function (resolve,reject){
-    //  console.log('employee')
+//learn
+export const Learn = (name,emp_id) => (dispatch,getState) => new Promise(async function (resolve,reject){
+   
       dispatch({
-          type:'GET_EMPLOYEE_SET'
+          type:'LEARN_LOADING'
       })
       const config = {
           headers: {
@@ -38,17 +39,16 @@ export const getEmpSettings = () => (dispatch,getState) => new Promise(async fun
           }
       }
       const body = {
-        name,
-        emp_id
+        name:name,
+        emp_id:emp_id
     };
       try{
           const data = await axios.post(`${url}/attendance/learn`,body,config)
-          // console.log('data',data.data)
-  
-        //   dispatch({
-        //       type:'UPDATE_EMPLOYEE_SET',
-        //       payload:data.data.data
-        //   })
+         
+          dispatch({
+              type:'UPDATE_LEARN',
+              payload:data.data.data
+          })
           resolve('done');
       }
       catch(err){
@@ -56,11 +56,11 @@ export const getEmpSettings = () => (dispatch,getState) => new Promise(async fun
           reject(err);
       }
   })
-
+//autoMode
 export const autoMode = (checkIn,checkOut) => (dispatch,getState) => new Promise(async function (resolve,reject){
 
     dispatch({
-        type:'GET_AUTOMODE'
+        type:'EMPLOYEE_SET_LOADING'
     })
     const config = {
         headers : {
@@ -73,9 +73,9 @@ export const autoMode = (checkIn,checkOut) => (dispatch,getState) => new Promise
     };
     try{
         const data = await axios.post(`${url}/attendance/autoMode`,body,config)
-      //  console.log('auto',data.data)
+     
         dispatch({
-            type:'UPDATE_AUTO_MODE',
+            type:'GET_EMPLOYEE_SET',
             payload:data.data
         })
         resolve('done');
@@ -87,9 +87,9 @@ export const autoMode = (checkIn,checkOut) => (dispatch,getState) => new Promise
 
 //attThreshold
 export const threshold = (late,absent) => (dispatch,getState) => new Promise(async function (resolve,reject){
-     console.log('auto',checkIn,checkOut)
+    
      dispatch({
-         type:'GET_AUTOMODE'
+         type:'AUTOMODE_LOADING'
      })
      const config = {
          headers : {
@@ -102,9 +102,9 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
      };
      try{
          const data = await axios.post(`${url}/attendance/attThreshold`,body,config)
-         //console.log('auto',data.data)
+       
          dispatch({
-             type:'UPDATE_AUTO_MODE',
+             type:'GET_AUTO_MODE',
              payload:data.data
          })
          resolve('done');
@@ -113,3 +113,134 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
          reject(err);
      }
  })
+
+
+ //checkIn/checkOut
+//  export const checkIn_Out = (time) => (dispatch,getState) => new Promise(async function (resolve,reject){
+//    // console.log('auto',late,absent)
+//     dispatch({
+//         type:'GET_CHECK_IN_OUT'
+//     })
+//     const config = {
+//         headers : {
+//             'Content-type':'Application/json'
+//         }
+//     }
+//     const body = {
+//         time:time,
+//         name,
+//         emp_id
+//     };
+//     try{
+//         const data = await axios.post(`${url}/attendance/checkin`,body,config)
+//        // console.log('auto',data.data)
+//         dispatch({
+//             type:'UPDATE_CHECK_IN',
+//             payload:data.data
+//         })
+//         resolve('done');
+//     }
+//     catch(err){
+//         reject(err);
+//     }
+//     try{
+//         const data = await axios.post(`${url}/attendance/checkout`,body,config)
+//        // console.log('auto',data.data)
+//         dispatch({
+//             type:'UPDATE_CHECK_OUT',
+//             payload:data.data
+//         })
+//         resolve('done');
+//     }
+//     catch(err){
+//         reject(err);
+//     }
+// })
+
+    export const changeMode = (check) => (dispatch,getState) => new Promise(async function (resolve,reject){
+
+        dispatch({
+            type:'CHECK_LOADING'
+        })
+        const config = {
+            headers : {
+                'Content-type':'Application/json'
+            }
+        }
+        const body = {
+            check
+        };
+        try{
+            const data = await axios.post(`${url}/attendance/check`,body,config)
+            if(data.data === 'mode changed to check in'){
+                dispatch({
+                    type:'UPDATE_CHECK',
+                    payload:1
+                })
+            }
+            else if(data.data === 'mode changed to check out'){
+                dispatch({
+                    type:'UPDATE_CHECK',
+                    payload:0
+                })
+            }
+            
+            resolve('done');
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+
+    //threshold
+    export const getThreshold = () => (dispatch,getState) => new Promise(async function (resolve,reject){
+
+        console.log('action')
+        dispatch({
+            type:'THRESHOLD_LOADING'
+        })
+        const config = {
+            headers : {
+                'Content-type':'Application/json'
+            }
+        }
+        try{
+            const data = await axios.get(`${url}/attendance/threshold`,config)
+            dispatch({
+                type:'GET_THRESHOLD',
+                payload:data.data
+            })
+            resolve('done');
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+
+
+    export const dailySummary = () => (dispatch,getState)=> new Promise (async function (resolve,reject){
+        dispatch({
+           type:'SUMMARY_LOADING' 
+        })
+        const config = {
+            headers: {
+                'Content-type':'Application/json'
+            }
+        }
+        const body = {
+            type: daily,
+            startTime,
+            endTime
+        };
+        // try{
+        //     const data = await axios.get(`${url}/attendance/macroAttSheet`,config)
+        //     dispatch({
+        //         type:'GET_SUMMARY',
+        //         payload:data.data
+        //     })
+        //     resolve('done');
+        // }
+        // catch(err){
+        //     reject(err);
+        // }
+    })
