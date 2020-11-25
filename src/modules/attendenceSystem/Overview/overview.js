@@ -13,10 +13,13 @@ import {
   TouchableOpacity,
   StatusBar,
   ViewBase,
+  FlatList
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements'
-
+import {connect} from 'react-redux';
+import {dailySummary} from '../../../redux/actions/AttAction';
+import {DataTable,ViewStyle} from 'react-native-paper';
 
 const background = require("../../../../assets/images/A.logo.png")
 
@@ -71,13 +74,13 @@ class HomeScreen extends React.Component {
     this.setState({
       visible1:true
     })
-   
+   this.props.dailySummary('daily');
   }
   onClick_Monthly = () => {
     this.setState({
       visible2:true
     })
-   
+    this.props.dailySummary('monthly');
   }
   onBack_Daily = () => {
     this.setState({
@@ -95,6 +98,9 @@ class HomeScreen extends React.Component {
   // }
   render() {
     const state = this.state;
+    const {summary,summaryLoading}= this.props;
+    //console.log('render',summary)
+
 
     return (
       <View style={styles.container}>
@@ -108,15 +114,30 @@ class HomeScreen extends React.Component {
             overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30,paddingBottom:hp('5%')}}>
           <View style={{flex:1}}>
           <Text style={{marginBottom:hp('1%'),fontWeight:'bold'}}>Daily Attendance Summary:</Text>
-          <ScrollView style={styles.container1}>
-            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-            <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
-            <Rows data={state.tableData} textStyle={styles.text}/>
-            </Table>
-          </ScrollView>
-            </View>
-            </Overlay>
-            <Text style={styles.btnText}>DAILY SUMMARY</Text>
+        <View style={styles.container1}>
+        <DataTable>
+          <DataTable.Header>
+          <DataTable.Title>Name</DataTable.Title>
+          <DataTable.Title>ID</DataTable.Title>
+          <DataTable.Title>Status</DataTable.Title>
+          </DataTable.Header>
+
+        <FlatList
+          data={ summary }                               
+          renderItem={({item}) => 
+          (<DataTable.Row>
+            <DataTable.Cell>{item.name}</DataTable.Cell>
+            <DataTable.Cell>{item.id}</DataTable.Cell>
+            <DataTable.Cell>{item.status}</DataTable.Cell>
+          </DataTable.Row>)
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
+        </DataTable>
+          </View>
+          </View>
+          </Overlay>
+          <Text style={styles.btnText}>DAILY SUMMARY</Text>
           </TouchableOpacity>
           
           <TouchableOpacity style={styles.btn}onPress={() => this.onClick_Monthly()}>
@@ -126,14 +147,32 @@ class HomeScreen extends React.Component {
             overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
               <View style={{flex:1}}>
               <Text style={{marginBottom:hp('2%'),fontWeight:'bold'}}>Monthly Attendance Summary:</Text>
-              <ScrollView style={styles.container1}>
-              <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-              <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
-              <Rows data={state.tableData} textStyle={styles.text}/>
-              </Table>
-              </ScrollView>
-              </View>
-           
+              <View style={styles.container1}>
+        <DataTable >
+          <DataTable.Header>
+          <DataTable.Title>ID</DataTable.Title>
+          <DataTable.Title>Name</DataTable.Title>
+          <DataTable.Title>Presents</DataTable.Title>
+          <DataTable.Title>Absents</DataTable.Title>
+          <DataTable.Title>Lates</DataTable.Title>
+          </DataTable.Header>
+
+        <FlatList
+          data={ summary }                               
+          renderItem={({item}) => 
+          (<DataTable.Row >
+            <DataTable.Cell >{item.id}</DataTable.Cell>
+            <DataTable.Cell >{item.name}</DataTable.Cell>
+            <DataTable.Cell >28</DataTable.Cell>
+            <DataTable.Cell >29</DataTable.Cell>
+            <DataTable.Cell >30</DataTable.Cell>
+          </DataTable.Row>)
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
+        </DataTable>
+          </View>
+            </View>
             </Overlay>
             <Text style={styles.btnText}>MONTHLY SUMMARY</Text>
           </TouchableOpacity>
@@ -187,11 +226,17 @@ class HomeScreen extends React.Component {
     );
   }
 }
-export default HomeScreen;
+
+const mapStateToProps = (state) => ({
+  summary:state.attendance.summary,
+  summaryLoading:state.attendance.summaryLoading
+})
+
+export default connect (mapStateToProps,{dailySummary})(HomeScreen);
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', alignItems: 'center' },
-  container1: { flex: 1,  paddingTop: 20, backgroundColor: '#fff',paddingBottom:hp('3%')},
+  container1: { flex: 1,  paddingTop: 20, backgroundColor: '#fff',paddingBottom:hp('3%'),flexDirection:'row'},
   image:{width: wp('80%'), height: hp('30%'), marginRight: wp('4%')},
   cardMainContainer:{width: wp('85%'), backgroundColor: '#fff', borderRadius: 20, elevation: 5, shadowRadius: 20, alignItems: 'center',height:hp('45%')
   },

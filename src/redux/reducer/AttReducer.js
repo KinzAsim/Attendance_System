@@ -82,7 +82,13 @@ const AttReducer = (state = initState, action) => {
         case 'SUMMARY_LOADING':
             return {
                 ...state,
-                summaryLoading:action.payload
+                summaryLoading:true
+            }
+        case 'GET_SUMMARY':
+            return {
+                ...state,
+                summaryLoading:false,
+                summary:action.payload
             }
         default: 
             return state;   

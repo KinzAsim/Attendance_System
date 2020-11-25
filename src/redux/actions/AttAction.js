@@ -158,7 +158,6 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
 // })
 
     export const changeMode = (check) => (dispatch,getState) => new Promise(async function (resolve,reject){
-
         dispatch({
             type:'CHECK_LOADING'
         })
@@ -194,8 +193,6 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
 
     //threshold
     export const getThreshold = () => (dispatch,getState) => new Promise(async function (resolve,reject){
-
-        console.log('action')
         dispatch({
             type:'THRESHOLD_LOADING'
         })
@@ -217,8 +214,8 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
         }
     })
 
-
-    export const dailySummary = () => (dispatch,getState)=> new Promise (async function (resolve,reject){
+//MacroAttSheet
+    export const dailySummary = (type) => (dispatch,getState)=> new Promise (async function (resolve,reject){
         dispatch({
            type:'SUMMARY_LOADING' 
         })
@@ -228,19 +225,18 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
             }
         }
         const body = {
-            type: daily,
-            startTime,
-            endTime
-        };
-        // try{
-        //     const data = await axios.get(`${url}/attendance/macroAttSheet`,config)
-        //     dispatch({
-        //         type:'GET_SUMMARY',
-        //         payload:data.data
-        //     })
-        //     resolve('done');
-        // }
-        // catch(err){
-        //     reject(err);
-        // }
+            type 
+        }
+        try{
+            const data = await axios.post(`${url}/attendance/macroAttSheet`,body,config)
+            console.log('daily',data.data)
+            dispatch({
+                type:'GET_SUMMARY',
+                payload:data.data.data
+            })
+            resolve('done');
+        }
+        catch(err){
+            reject(err);
+        }
     })
