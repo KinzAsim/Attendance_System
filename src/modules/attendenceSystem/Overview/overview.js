@@ -159,7 +159,7 @@ class HomeScreen extends React.Component {
 
         <FlatList
           data={ summary }                               
-          renderItem={({item}) => 
+          renderItem={({item}) =>  
           (<DataTable.Row >
             <DataTable.Cell >{item.id}</DataTable.Cell>
             <DataTable.Cell >{item.name}</DataTable.Cell>
