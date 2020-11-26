@@ -10,7 +10,9 @@ const initState = {
     thresholds:[],
     thresholdLoading:false,
     summary:[],
-    summaryLoading:false
+    summaryLoading:false,
+    allAttendance:[],
+    allAttendanceLoading:false
 
 };
 
@@ -89,6 +91,17 @@ const AttReducer = (state = initState, action) => {
                 ...state,
                 summaryLoading:false,
                 summary:action.payload
+            }
+        case 'ATTENDANCE_LOADING':
+            return {
+                ...state,
+                allAttendanceLoading:true
+            }
+        case 'GET_ATTENDANCE':
+            return {
+                ...state,
+                allAttendanceLoading:false,
+                allAttendance:action.payload
             }
         default: 
             return state;   

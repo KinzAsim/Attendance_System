@@ -3,6 +3,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 //import {TableView} from "react-native-responsive-table"
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,8 +21,11 @@ import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements'
 import {connect} from 'react-redux';
 import {dailySummary} from '../../../redux/actions/AttAction';
 import {DataTable,ViewStyle} from 'react-native-paper';
+import moment from 'moment';
+import Item from './IdItem';
 
 const background = require("../../../../assets/images/A.logo.png")
+
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -29,58 +33,25 @@ class HomeScreen extends React.Component {
     this.state = {
       visible1: false,
       visible2:false,
-      tableHead: ['Name', 'Id', 'Status'],
-      tableData: [
-        ['Kinza Asim', '2', '3'],
-        ['Umair Yaqub', 'b', 'c'],
-        ['Hamza Munir', '2', '3'],
-        ['Hamza Saleem', 'z', 'c'],
-        ['Mubassir', 'o', 'e'],
-        ['Amna Malik', 'b', 'c'],
-        ['Mahnoor', 'w', 'h'],
-        ['Kinza Asim', '2', '3'],
-        ['Umair Yaqub', 'b', 'c'],
-        ['Hamza Munir', '2', '3'],
-        ['Hamza Saleem', 'z', 'c'],
-        ['Mubassir', 'o', 'e'],
-        ['Amna Malik', 'b', 'c'],
-        ['Mahnoor', 'w', 'h'],
-        ['Kinza Asim', '2', '3'],
-        ['Umair Yaqub', 'b', 'c'],
-        ['Hamza Munir', '2', '3'],
-        ['Hamza Saleem', 'z', 'c'],
-        ['Mubassir', 'o', 'e'],
-        ['Amna Malik', 'b', 'c'],
-        ['Mahnoor', 'w', 'h'],
-        ['Kinza Asim', '2', '3'],
-        ['Umair Yaqub', 'b', 'c'],
-        ['Hamza Munir', '2', '3'],
-        ['Hamza Saleem', 'z', 'c'],
-        ['Mubassir', 'o', 'e'],
-        ['Amna Malik', 'b', 'c'],
-        ['Mahnoor', 'w', 'h'],
-        ['Kinza Asim', '2', '3'],
-        ['Umair Yaqub', 'b', 'c'],
-        ['Hamza Munir', '2', '3'],
-        ['Hamza Saleem', 'z', 'c'],
-        ['Mubassir', 'o', 'e'],
-        ['Amna Malik', 'b', 'c'],
-        ['Mahnoor', 'w', 'h']
-      ]
+      startTime:moment().subtract(30,'days'),
+      endTime:moment().add(1,'day'),
+      tableHead: ['Name', 'Id', 'Status']
     }
   }
 
   onClick_Daily = () => {
+    const{startTime,endTime}=this.state;
     this.setState({
       visible1:true
     })
    this.props.dailySummary('daily');
   }
   onClick_Monthly = () => {
+    const{startTime,endTime}=this.state;
     this.setState({
       visible2:true
     })
-    this.props.dailySummary('monthly');
+    this.props.dailySummary('custom',startTime,endTime);
   }
   onBack_Daily = () => {
     this.setState({
@@ -108,18 +79,20 @@ class HomeScreen extends React.Component {
         <Card containerStyle={styles.cardMainContainer}>
           <Text style={styles.heading1}>Summary</Text>
           <TouchableOpacity style={[styles.btn, { marginTop: hp('3%') }]} onPress={() => this.onClick_Daily()}>
+          <Text style={styles.btnText}>DAILY SUMMARY</Text>
+          </TouchableOpacity>
           <Overlay isVisible={this.state.visible1} onBackdropPress={()=>this.onBack_Daily()}
             fullScreen={true} 
             // backdropStyle={{padding:20}}
-            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30,paddingBottom:hp('5%')}}>
+            overlayStyle={{width:wp('95%'),height:hp('80%'),borderRadius:30,paddingBottom:hp('2%')}}>
           <View style={{flex:1}}>
           <Text style={{marginBottom:hp('1%'),fontWeight:'bold'}}>Daily Attendance Summary:</Text>
         <View style={styles.container1}>
         <DataTable>
           <DataTable.Header>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>ID</DataTable.Title>
-          <DataTable.Title>Status</DataTable.Title>
+          <DataTable.Title >Name</DataTable.Title>
+          <DataTable.Title >ID</DataTable.Title>
+          <DataTable.Title >Status</DataTable.Title>
           </DataTable.Header>
 
         <FlatList
@@ -137,53 +110,27 @@ class HomeScreen extends React.Component {
           </View>
           </View>
           </Overlay>
-          <Text style={styles.btnText}>DAILY SUMMARY</Text>
-          </TouchableOpacity>
+          
+         
           
           <TouchableOpacity style={styles.btn}onPress={() => this.onClick_Monthly()}>
-          <Overlay isVisible={this.state.visible2} onBackdropPress={()=>this.onBack_Monthly()}
-            fullScreen={true} 
-            // backdropStyle={{padding:20}}
-            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
-              <View style={{flex:1}}>
-              <Text style={{marginBottom:hp('2%'),fontWeight:'bold'}}>Monthly Attendance Summary:</Text>
-              <View style={styles.container1}>
-        <DataTable >
-          <DataTable.Header>
-          <DataTable.Title>ID</DataTable.Title>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>Presents</DataTable.Title>
-          <DataTable.Title>Absents</DataTable.Title>
-          <DataTable.Title>Lates</DataTable.Title>
-          </DataTable.Header>
-
-        <FlatList
-          data={ summary }                               
-          renderItem={({item}) =>  
-          (<DataTable.Row >
-            <DataTable.Cell >{item.id}</DataTable.Cell>
-            <DataTable.Cell >{item.name}</DataTable.Cell>
-            <DataTable.Cell >28</DataTable.Cell>
-            <DataTable.Cell >29</DataTable.Cell>
-            <DataTable.Cell >30</DataTable.Cell>
-          </DataTable.Row>)
-          }
-          keyExtractor={(item, index) => index.toString()}
-        />
-        </DataTable>
-          </View>
-            </View>
-            </Overlay>
-            <Text style={styles.btnText}>MONTHLY SUMMARY</Text>
+          <Text style={styles.btnText}>MONTHLY SUMMARY</Text>
           </TouchableOpacity>
 
-          <Text style={styles.heading2}>Custom :</Text>
-
-          <View style={{ flexDirection: 'row', marginTop: hp('0.5%'), justifyContent: 'center' }}>
+          {/* <LinearGradient colors={["#ff3d00","#ffccbb"]}  style={{flex:1,borderRadius:20,marginVertical:wp('1%')}}> */}
+          <Overlay isVisible={this.state.visible2} onBackdropPress={()=>this.onBack_Monthly()}
+            fullScreen={true} 
+            backdropStyle={{padding:20}}
+            overlayStyle={{width:wp('90%'),height:hp('80%'),borderRadius:30}}>
+          <View style={{flex:1}}>
+              <Text style={{marginBottom:hp('2%'),fontWeight:'bold',alignSelf:'center'}}>Monthly Attendance Summary:</Text>
+          <View style={styles.container1}>
+        
+          <View style={{ flexDirection: 'row', marginTop: hp('0.5%'), justifyContent: 'flex-start' }}>
             <Text style={[styles.DatePickerText, { marginTop: hp('1.5%') }]}>Start: </Text>
             <DatePicker
               style={styles.DatePicker}
-              // date={StartDate}
+               date={this.state.startTime}
               mode="date"
               display="default"
               placeholder="select date"
@@ -200,11 +147,11 @@ class HomeScreen extends React.Component {
               onDateChange={(date) => { startDateChange(date) }}
             />
           </View>
-          <View style={{ flexDirection: 'row', marginTop: hp('1%'), justifyContent: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-start',marginBottom:hp('1%') }}>
             <Text style={[styles.DatePickerText, { marginTop: hp('1.5%') }]}>  End: </Text>
             <DatePicker
               style={styles.DatePicker}
-              // date={EndDate}
+               date={this.state.endTime}
               mode="date"
               display="default"
               placeholder="select date"
@@ -213,7 +160,7 @@ class HomeScreen extends React.Component {
               cancelBtnText="Cancel"
               customStyles={{
                 dateInput: styles.DatePickerInput,
-                dateIcon: styles.DatePickerIcon,
+                dateIcon: styles.DatePickerIcon1,
                 dateText: styles.DateText
                 ,
                 // ... You can check the source to find the other keys.
@@ -221,6 +168,15 @@ class HomeScreen extends React.Component {
               onDateChange={(date) => { endDateChange(date) }}
             />
           </View>
+         
+          <FlatList                             
+              data={ summary }                               
+              renderItem={({item}) => <Item employee_id={item.employee_id} employee_name={item.employee_name}  presents={item.presents} absents={item.absents} lates={item.lates}/>}
+              keyExtractor={(item, index) => index.toString()}
+              />      
+          </View>
+          </View>
+          </Overlay>
         </Card>
       </View>
     );
@@ -236,11 +192,11 @@ export default connect (mapStateToProps,{dailySummary})(HomeScreen);
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', alignItems: 'center' },
-  container1: { flex: 1,  paddingTop: 20, backgroundColor: '#fff',paddingBottom:hp('3%'),flexDirection:'row'},
-  image:{width: wp('80%'), height: hp('30%'), marginRight: wp('4%')},
-  cardMainContainer:{width: wp('85%'), backgroundColor: '#fff', borderRadius: 20, elevation: 5, shadowRadius: 20, alignItems: 'center',height:hp('45%')
+  container1: { flex: 1,  backgroundColor: '#fff',paddingBottom:hp('3%')},
+  image:{width: wp('80%'), height: hp('40%'), marginRight: wp('4%')},
+  cardMainContainer:{width: wp('85%'), backgroundColor: '#fff', borderRadius: 20, elevation: 5, shadowRadius: 20, alignItems: 'center',height:hp('35%')
   },
-  heading1:{fontWeight: 'bold', marginBottom: hp('1%'), fontSize: hp('2.5%'), alignSelf: 'center'},
+  heading1:{fontWeight: 'bold', marginTop: hp('2%'),marginBottom:hp('3%'),fontSize: hp('2.5%'), alignSelf: 'center'},
   heading2:{fontWeight: 'bold', marginTop: hp('0.5%')},
   btn: {
     justifyContent: 'center',
@@ -257,14 +213,14 @@ const styles = StyleSheet.create({
   btnText:{color: '#fff', fontWeight: 'bold'},
   datePickerView: {
     alignItems: 'center',
-    flexDirection: 'row',
   },
 
-  DatePicker: { width: wp('37%'), marginLeft: wp('1%') },
-  DatePickerText: { marginLeft: wp('3%'), color: "#E64A19", fontWeight: 'bold' },
-  DatePickerInput: { marginLeft: wp('0%'), height: hp('3%') },
-  DatePickerIcon: { top: hp('0%'), marginLeft: wp('0%') },
-  DateText: { color: "#800080" },
+  DatePicker: { width: wp('37%')},
+  DatePickerText: { color: "#E64A19", fontWeight: 'bold' },
+  DatePickerInput: {  height: hp('3%') },
+  DatePickerIcon: { top: hp('0%')},
+  DatePickerIcon1: { top: hp('0%'),marginRight:wp('3%')},
+  DateText: { color: "#E64A19" },
   head: {height: 40, backgroundColor: '#f1f8ff' },
   text: { margin:4,fontSize:12 }
 })

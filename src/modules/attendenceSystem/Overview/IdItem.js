@@ -14,19 +14,42 @@ class Item extends React.Component{
     }
 
     render() {
-        const {id} = this.props; 
+        const {employee_id,employee_name,presents,absents,lates} = this.props; 
        
 
         return(
-          <View style={{flex:1}}>
+          // <LinearGradient colors={["#fff","#ffccbb"]}  style={{borderRadius:30,flex:1,marginVertical:hp('0.1%')}}>
+
+           <View style={{flex:1}}>
             {/* <View style={{flexDirection:'row'}}>
             <Image
             style={{width:wp('7%'),height:hp('3.5%'),marginRight:wp('2%')}}
             source={icon}
             /> */}
-              <Text style={{color:'#000'}}>{id}</Text>
+            <View>
+              <View style={{flexDirection:'row',marginTop:hp('1%')}}>
+              <Text style={{color:'#000',marginLeft:wp('4%'),fontWeight:'bold',color:'#ff3d00'}}>Employee Name: </Text>
+              <Text style={{marginLeft:wp('1%'),color:'#ff5722'}}>{employee_name}</Text>
+              </View>
+              <View style={{flexDirection:'row'}}>
+              <Text style={{color:'#000',marginLeft:wp('4%'),fontWeight:'bold',color:'#ff3d00'}}>Employee Id: </Text>
+              <Text style={{marginLeft:wp('1%'),color:'#ff5722'}}>{employee_id}</Text>
+              </View>
+              <View style={{flexDirection:'row'}}>
+              <Text style={{color:'#000',marginLeft:wp('4%'),fontWeight:'bold',color:'#ff3d00'}}>Presents:</Text>
+              <Text style={{marginLeft:wp('1%'),color:'#ff5722'}}> {presents}</Text>
+              </View>
+              <View style={{flexDirection:'row'}}>
+              <Text style={{color:'#000',marginLeft:wp('4%'),fontWeight:'bold',color:'#ff3d00'}}>Absents: </Text>
+              <Text style={{marginLeft:wp('1%'),color:'#ff5722'}}>{absents}</Text>
+              </View>
+              <View style={{flexDirection:'row',marginBottom:hp('1%')}}>
+              <Text style={{color:'#000',marginLeft:wp('4%'),fontWeight:'bold',color:'#ff3d00'}}>Lates:</Text>
+              <Text style={{marginLeft:wp('1%'),color:'#ff5722'}}>{lates}</Text>
+              </View>
+            </View>             
             <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%')}}/>
-          </View>
+         </View> 
           
         );
     }

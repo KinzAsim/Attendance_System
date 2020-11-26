@@ -1,12 +1,14 @@
 import React from 'react';
 import {View,Text,TouchableOpacity,StyleSheet,Dimensions, StatusBar,SafeAreaView,FlatList,ScrollView,LogBox} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { ButtonGroup, Card } from 'react-native-elements';
+import { ButtonGroup, Card,Divider } from 'react-native-elements';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Item from './detaiIstem'
 import DatePicker from 'react-native-datepicker';
-import { Divider } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {connect} from 'react-redux';
+import moment from 'moment';
+import {allAttendanceDetail} from '../../../redux/actions/AttAction';
 
 const buttons = ['PAST WEEK', 'PAST MONTH']
 LogBox.ignoreLogs(['VirtualizedLists should never be']);
@@ -15,6 +17,8 @@ class DetailScreen extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      startTime:moment().subtract(7,'days'),
+      endTime:moment().add(1,'day'),
       DATA:[{
             id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
             name: 'First Item',
@@ -39,8 +43,15 @@ class DetailScreen extends React.Component{
     }
     
   }
+  handleChange = () => {
+    const{startTime,endTime} = this.state;
+    this.props.allAttendanceDetail(startTime,endTime);
+  }
   render(){
     const {DATA} = this.state;
+    const {allAttendance, allAttendanceLoading,employee_name,emp_id} = this.props;
+    console.log('render',allAttendance)
+
     return(
       <LinearGradient colors={['#fff', '#ffccbb', '#ff3d00']} style={{flex:1}}>
       <View style={{backgroundColor:'#fff',flex:0.99,marginHorizontal:hp('2%'),marginTop:hp('2%'),marginBottom:hp('2%'),
@@ -67,13 +78,13 @@ class DetailScreen extends React.Component{
                 })}
             />
           <View style={{flexDirection:'row',marginHorizontal:hp('4%'),borderWidth:1,borderRadius:5,borderColor:'#fff',padding:wp('5%')}}>  
-            <Text style={{color:'#000'}}>Name:  Kinza Asim</Text>
-            <Text style={{marginLeft:wp('20%')}} numberOfLines={1}>Id: 292 </Text>
+              <Text style={{color:'#000'}}>Name: {employee_name}</Text>
+            <Text style={{marginLeft:wp('20%')}} numberOfLines={1}>Id: {emp_id}</Text>
           </View>
           <ScrollView>
           <FlatList                             
-          data={ DATA }                               
-          renderItem={({item}) => <Item/>}
+          data={ allAttendance }                               
+          renderItem={({item}) => <Item day={item.date} status={item.status} check_in_time={item.check_in_time} check_out_time={item.check_out_time} totalTime={item.totalTime} overtime={item.overtime}/>}
           keyExtractor={(item, index) => index.toString()}
           />
           </ScrollView>
@@ -82,7 +93,8 @@ class DetailScreen extends React.Component{
        buttons={buttons}
        innerBorderStyle={{color:'#ffccbb'}}
        textStyle={{color:'#fff'}}
-       containerStyle={{height:hp('5%'),marginTop:hp('5%'),backgroundColor:'#ffccbb',borderColor:'#ffccbb'}}/>
+       containerStyle={{height:hp('5%'),marginTop:hp('5%'),backgroundColor:'#ffccbb',borderColor:'#ffccbb'}}
+       onPress={()=>this.handleChange()}/>
 
       <Text style={{fontWeight:'bold',alignSelf:'center',marginTop:hp('1%')}}>Custom:</Text>
       <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('30%'),marginLeft:wp('30%')}}/>
@@ -92,7 +104,7 @@ class DetailScreen extends React.Component{
             <Text style={[styles.DatePickerText, { marginTop: hp('1.5%')}]}>Start: </Text>
             <DatePicker
               style={styles.DatePicker}
-              // date={StartDate}
+              date={this.state.startTime}
               mode="date"
               display="default"
               placeholder="select date"
@@ -111,7 +123,7 @@ class DetailScreen extends React.Component{
             <Text style={[styles.DatePickerText1, { marginTop: hp('1.5%') }]}>  End: </Text>
             <DatePicker
               style={styles.DatePicker1}
-              // date={EndDate}
+               date={this.state.endTime}
               mode="date"
               display="default"
               placeholder="select date"
@@ -135,7 +147,12 @@ class DetailScreen extends React.Component{
     );
   }
 }
-export default DetailScreen;
+
+const mapStateToProps = (state) => ({
+  allAttendance : state.attendance.allAttendance,
+  allAttendanceLoading : state.attendance.allAttendanceLoading
+})
+export default connect(mapStateToProps,{allAttendanceDetail})(DetailScreen);
 
 const styles = StyleSheet.create({
     svgCurve: {

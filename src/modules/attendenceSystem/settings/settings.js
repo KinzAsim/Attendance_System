@@ -132,9 +132,9 @@ const handleLearn = () => {
         {/* </Card>  */}
 
         {/* <Card.Divider/>  */}
-        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('8%') }}
+        <TouchableOpacity style={{ justifyContent:'center',alignItems:'center',marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('8%') }}
         onPress={()=>handleLearn()}>
-          <Text style={{ marginHorizontal: wp('4%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18 }}>
+          <Text style={{ color: '#ff3d00', fontSize: 18 }}>
             Change Mode To Learn
                 </Text>
         </TouchableOpacity>
@@ -246,13 +246,13 @@ const handleLearn = () => {
             <Text style={{ alignSelf: 'center', fontSize: 30, color: '#fff', marginTop: hp('10%') }}>Check Out</Text>
           )}
 
-        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('10%') }}
+        <TouchableOpacity style={{ justifyContent:'center',alignItems:'center',marginTop: hp('10%'), width: wp('60%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginHorizontal: wp('10%') }}
           onPress={() => handleModeChange()}>
-            {threshold.check === 1 ? (<Text style={{ marginHorizontal: wp('1%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('5%') }}>
+            {threshold.check === 1 ? (<Text style={{  color: '#ff3d00', fontSize: 18, paddingLeft: wp('5%') }}>
             Change To Check Out
           </Text>
           ):(
-            <Text style={{ marginHorizontal: wp('1%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('5%') }}>
+            <Text style={{  color: '#ff3d00', fontSize: 18}}>
             Change To Check In
           </Text>
           )}

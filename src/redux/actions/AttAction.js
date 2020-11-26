@@ -45,10 +45,15 @@ export const Learn = (name,emp_id) => (dispatch,getState) => new Promise(async f
       try{
           const data = await axios.post(`${url}/attendance/learn`,body,config)
          
-          dispatch({
-              type:'UPDATE_LEARN',
-              payload:data.data.data
-          })
+         if(data.data === 'mode changed to learn'){
+            dispatch({
+                type:'UPDATE_CHECK',
+                payload:data.data
+            })
+        }
+        else if(data.data === undefined){
+            console.log('Error')
+        }
           resolve('done');
       }
       catch(err){
@@ -157,6 +162,7 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
 //     }
 // })
 
+//check
     export const changeMode = (check) => (dispatch,getState) => new Promise(async function (resolve,reject){
         dispatch({
             type:'CHECK_LOADING'
@@ -215,7 +221,7 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
     })
 
 //MacroAttSheet
-    export const dailySummary = (type) => (dispatch,getState)=> new Promise (async function (resolve,reject){
+    export const dailySummary = (type,startTime,endTime) => (dispatch,getState)=> new Promise (async function (resolve,reject){
         dispatch({
            type:'SUMMARY_LOADING' 
         })
@@ -224,15 +230,55 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
                 'Content-type':'Application/json'
             }
         }
-        const body = {
-            type 
+        let body = null;
+        if(type === 'custom'){
+             body = {
+                type,
+                startTime,
+                endTime
+            }
         }
+        else if(type === 'daily'){
+             body = {
+                type
+            }
+        }
+        
         try{
             const data = await axios.post(`${url}/attendance/macroAttSheet`,body,config)
-            console.log('daily',data.data)
+            
             dispatch({
                 type:'GET_SUMMARY',
                 payload:data.data.data
+            })
+            resolve('done');
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+
+//Detail
+    export const allAttendanceDetail = (startTime,endTime) => (dispatch,getState)=> new Promise (async function (resolve,reject){
+        dispatch({
+           type:'ATTENDANCE_LOADING' 
+        })
+        const config = {
+            headers: {
+                'Content-type':'Application/json'
+            }
+        }
+        const body = {
+            startTime,
+            endTime
+        }
+        console.log('body',body)
+        try{
+            const data = await axios.post(`${url}/attendance/getAllAttendance`,body,config)
+           
+            dispatch({
+                type:'GET_ATTENDANCE',
+                payload:data.data
             })
             resolve('done');
         }

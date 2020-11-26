@@ -21,7 +21,7 @@ class Item extends React.Component{
     }
 
     render() {
-       // const {created_at,name} = this.props;       
+        const {date,status,check_in_time,check_out_time,totalTime,overtime} = this.props;       
         return( 
             // {/* <Card containerStyle={{marginTop:hp('5%')}}> */}
             // {/* <Image
@@ -31,17 +31,17 @@ class Item extends React.Component{
 
             <View style={{paddingBottom:hp('1%'),marginBottom:hp('3%')}} >
               <View style={{marginLeft:wp('3%'),paddingTop:hp('2%')}}>
-                <Text style={{marginLeft:wp('2%'),fontWeight:'bold'}} numberOfLines={1}> Day:   Friday </Text>
+                <Text style={{marginLeft:wp('2%'),fontWeight:'bold'}} numberOfLines={1}> Day:  {date} </Text>
                 <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%'),marginBottom:hp('1%')}}/>
-                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Status:  Present </Text>
+                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Status:  {status} </Text>
                 <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%'),marginBottom:hp('1%')}}/>
-                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Check In Time:  9:00 AM </Text>
+                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Check In Time: {check_in_time}</Text>
                 <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%'),marginBottom:hp('1%')}}/>
-                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Check Out Time:  6:00 PM </Text>
+                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Check Out Time:  {check_out_time} </Text>
                 <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%'),marginBottom:hp('1%')}}/>
-                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Total Time:  9 hours </Text>
+                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Total Time:  {totalTime} </Text>
                 <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%'),marginBottom:hp('1%')}}/>
-                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Overtime:  0 mins </Text>
+                <Text style={{marginLeft:wp('2%')}} numberOfLines={1}>Overtime:  {overtime} </Text>
                 <Divider style={{backgroundColor:'#000',marginTop:hp('1%'),marginRight:wp('2%')}}/>
               </View>            
             </View>
