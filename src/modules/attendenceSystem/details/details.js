@@ -19,38 +19,40 @@ class DetailScreen extends React.Component{
     this.state={
       startTime:moment().subtract(7,'days'),
       endTime:moment().add(1,'day'),
-      DATA:[{
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
+      // DATA:[{
+      //       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      //       name: 'First Item',
             
-          },
-          {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
+      //     },
+      //     {
+      //       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      //       name: 'First Item',
             
-          },
-          {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
+      //     },
+      //     {
+      //       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      //       name: 'First Item',
             
-          },
-          {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            name: 'First Item',
+      //     },
+      //     {
+      //       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+      //       name: 'First Item',
             
-          },
-        ]
+      //     },
+      //   ]
     }
     
   }
   handleChange = () => {
     const{startTime,endTime} = this.state;
+  
+
     this.props.allAttendanceDetail(startTime,endTime);
   }
   render(){
-    const {DATA} = this.state;
+    const {DATA,startTime,endTime} = this.state;
     const {allAttendance, allAttendanceLoading,employee_name,emp_id} = this.props;
-    console.log('render',allAttendance)
+    //console.log('render',startTime,endTime)
 
     return(
       <LinearGradient colors={['#fff', '#ffccbb', '#ff3d00']} style={{flex:1}}>
@@ -78,13 +80,13 @@ class DetailScreen extends React.Component{
                 })}
             />
           <View style={{flexDirection:'row',marginHorizontal:hp('4%'),borderWidth:1,borderRadius:5,borderColor:'#fff',padding:wp('5%')}}>  
-              <Text style={{color:'#000'}}>Name: {employee_name}</Text>
-            <Text style={{marginLeft:wp('20%')}} numberOfLines={1}>Id: {emp_id}</Text>
+            {/* <Text style={{color:'#000'}}>Name: {employee_name}</Text> */}
+            {/* <Text style={{marginLeft:wp('20%')}} numberOfLines={1}>Id: {emp_id}</Text> */}
           </View>
           <ScrollView>
           <FlatList                             
           data={ allAttendance }                               
-          renderItem={({item}) => <Item day={item.date} status={item.status} check_in_time={item.check_in_time} check_out_time={item.check_out_time} totalTime={item.totalTime} overtime={item.overtime}/>}
+          renderItem={({item}) => <Item check_in_time={item.check_in_time} check_out_time={item.check_out_time} date={item.date} employee_name={item.employee_name} overtime={item.overtime} status={item.status}/>}
           keyExtractor={(item, index) => index.toString()}
           />
           </ScrollView>
@@ -151,7 +153,8 @@ class DetailScreen extends React.Component{
 const mapStateToProps = (state) => ({
   allAttendance : state.attendance.allAttendance,
   allAttendanceLoading : state.attendance.allAttendanceLoading
-})
+});
+
 export default connect(mapStateToProps,{allAttendanceDetail})(DetailScreen);
 
 const styles = StyleSheet.create({

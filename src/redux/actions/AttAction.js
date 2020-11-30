@@ -91,7 +91,7 @@ export const autoMode = (checkIn,checkOut) => (dispatch,getState) => new Promise
 })
 
 //attThreshold
-export const threshold = (late,absent) => (dispatch,getState) => new Promise(async function (resolve,reject){
+export const Attthreshold = (late,absent) => (dispatch,getState) => new Promise(async function (resolve,reject){
     
      dispatch({
          type:'AUTOMODE_LOADING'
@@ -272,14 +272,43 @@ export const threshold = (late,absent) => (dispatch,getState) => new Promise(asy
             startTime,
             endTime
         }
-        console.log('body',body)
+        // console.log('body',body)
         try{
             const data = await axios.post(`${url}/attendance/getAllAttendance`,body,config)
-           
-            dispatch({
+        // console.log('action',data.data);
+        // let d = data.data;
+        // console.log("res",d);
+        // let arr=[];
+        //    for(let i =0; i<=d.length-1; i++){
+        //          d[i].map((u)=>{
+        //              arr.push(u);
+        //          });
+        //    }
+           //console.log('res', arr);
+           dispatch({
                 type:'GET_ATTENDANCE',
                 payload:data.data
             })
+          
+           
+           
+        //  let arr = d.map((u)=> u);
+        //  console.log(arr)
+        //    d.map((user)=>{
+        //        let obj ={
+        //            name:user.employee_name,
+        //            checkIn: user.check_in_time,
+
+        //        }
+        //        arr.push(obj);
+        //    });      
+        //    console.log(arr);
+        //    let i=0;
+        //    for( i<=data.data,length ; i++ ){
+
+        //    }
+           
+            // 
             resolve('done');
         }
         catch(err){

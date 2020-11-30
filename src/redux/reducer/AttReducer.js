@@ -1,5 +1,3 @@
-
-
 const initState = {
     employeesLoading:false,
     employees:[],
@@ -98,6 +96,7 @@ const AttReducer = (state = initState, action) => {
                 allAttendanceLoading:true
             }
         case 'GET_ATTENDANCE':
+        //    console.log('reducer',action.payload)
             return {
                 ...state,
                 allAttendanceLoading:false,

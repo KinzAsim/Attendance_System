@@ -4,7 +4,7 @@ import { Card } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { colors } from '../../../style';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { autoMode, threshold, changeMode, getThreshold, Learn} from '../../../redux/actions/AttAction';
+import { autoMode, Attthreshold, changeMode, getThreshold, Learn} from '../../../redux/actions/AttAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 const SettingScreen = () => {
@@ -85,7 +85,7 @@ const SettingScreen = () => {
 
   }
   const handleSubmitAttThreshold = () => {
-    dispatch(threshold(lateThreshold, absentThreshold));
+    dispatch(Attthreshold(lateThreshold, absentThreshold));
 
   }
   const handleModeChange = () => {
