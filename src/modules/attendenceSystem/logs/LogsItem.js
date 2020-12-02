@@ -15,7 +15,7 @@ class Item extends React.Component{
     }
 
     render() {
-        const {emp_id,name} = this.props; 
+        const {id,name} = this.props; 
        
 
         return(
@@ -33,7 +33,7 @@ class Item extends React.Component{
 
               <View style={{flexDirection:'row'}}>
               <Text style={{color:'#000',marginRight:wp('1%'),fontWeight: 'bold'}}>Id:</Text> 
-              <Text style={styles.title} numberOfLines={1}>{emp_id} </Text>
+              <Text style={styles.title} numberOfLines={1}>{id} </Text>
               </View>
               </View>            
             </View>

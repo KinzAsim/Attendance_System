@@ -24,7 +24,7 @@ const AttReducer = (state = initState, action) => {
               employeesLoading: true 
             } 
         case 'GET_EMPLOYEES':
-           
+          
             return {
                 ...state,
                 employeesLoading: false,
@@ -96,7 +96,7 @@ const AttReducer = (state = initState, action) => {
                 allAttendanceLoading:true
             }
         case 'GET_ATTENDANCE':
-        //    console.log('reducer',action.payload)
+            //console.log('reducer',action.payload)
             return {
                 ...state,
                 allAttendanceLoading:false,

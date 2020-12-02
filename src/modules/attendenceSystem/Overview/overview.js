@@ -15,19 +15,20 @@ import {
   StatusBar,
   ViewBase,
   ActivityIndicator,
-  FlatList
+  FlatList,
+  LogBox
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements'
 import {connect} from 'react-redux';
 import {dailySummary} from '../../../redux/actions/AttAction';
-import {DataTable,ViewStyle} from 'react-native-paper';
+import {DataTable} from 'react-native-paper';
 import moment from 'moment';
 import Item from './IdItem';
 import { Divider } from 'react-native-elements';
 
 const background = require("../../../../assets/images/A.logo.png")
-
+LogBox.ignoreLogs(['Require cycle: node_modules']);
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class HomeScreen extends React.Component {
   // }
   render() {
     const state = this.state;
-    const {summary,summaryLoading}= this.props;
+    const {summary,summaryLoading,absents,lates,presents}= this.props;
     //console.log('render',summary)
 
 
@@ -84,11 +85,11 @@ class HomeScreen extends React.Component {
           <Divider style={{backgroundColor:'#000',marginRight:wp('2%'),marginBottom:hp('1%')}}/>
           <View style={{justifyContent:'space-between',flexDirection:'row'}}>
           <Text style={{fontSize:12,paddingRight:1,fontWeight:'bold'}}>Total Absent: </Text>
-          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>15</Text>
+          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>2</Text>
           <Text style={{fontSize:12,paddingRight:1,marginLeft:wp('1%'),fontWeight:'bold'}}>Total Present: </Text>
-          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>0</Text>
+          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>12</Text>
           <Text style={{fontSize:12,paddingRight:5,marginLeft:wp('1%'),fontWeight:'bold'}}>Total Late: </Text>
-          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>0</Text>
+          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>1</Text>
           </View>
           <TouchableOpacity style={[styles.btn, { marginTop: hp('3%') }]} onPress={() => this.onClick_Daily()}>
           <Text style={styles.btnText}>DAILY SUMMARY</Text>

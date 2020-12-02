@@ -39,7 +39,7 @@ class LogScreen extends React.Component{
   render(){
     const{DATA} = this.state;
     const{employees,empLoading} = this.props;
-    
+    // console.log('emp',employees)
 
   return( 
         <>         
@@ -50,10 +50,10 @@ class LogScreen extends React.Component{
             <View style={styles.container}>
               <ImageBackground source={background} style={{height:'100%'}}>
               <Text style={{marginHorizontal:wp('5%'),marginVertical:hp('3%'),fontSize:20,fontWeight:'bold'}}>Employee List:</Text>
-              <SafeAreaView>
+              <SafeAreaView style={{marginBottom:hp('10%')}}>
               <FlatList                             
               data={ employees }                               
-              renderItem={({item}) => <Item name={item.name} emp_id={item.emp_id}/>}
+              renderItem={({item}) => <Item name={item.name} id={item.id}/>}
               keyExtractor={(item, index) => index.toString()}
               />
               </SafeAreaView>
@@ -86,7 +86,7 @@ export default  connect(mapStateToProps,{getEmpList})(LogScreen);
   },
 });
 
- // <View style={{flex:1,backgroundColor:'#bf360c'}}>
+      // <View style={{flex:1,backgroundColor:'#bf360c'}}>
       // <View style={{borderBottomLeftRadius:90,backgroundColor:'#FFCCBC',flex:0.4}}> 
       // <View style={{backgroundColor:'#fff',flex:0.4,borderBottomLeftRadius:90}}></View>
       // </View>

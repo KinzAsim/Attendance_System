@@ -6,7 +6,7 @@ import { colors } from '../style';
 import HomeScreen from '../modules/attendenceSystem/Overview/overview';
 import LogsScreen from '../modules/attendenceSystem/logs/logs';
 import SettingScreen from '../modules/attendenceSystem/settings/settings';
-import DetailScreen from '../modules/attendenceSystem/details/details';
+import DetailsScreen from '../modules/attendenceSystem/details/details';
 // import graphScreen from '../modules/tankMonitorinSystem/charts/graphs';
 // import alertScreen from '../modules/tankMonitorinSystem/alerts/recentAlerts';
 const iconSetting = require('../../assets/images/tabbar/pages1.png')
@@ -43,7 +43,7 @@ export default createBottomTabNavigator(
       },
     }, 
     Details: {
-      screen: DetailScreen,
+      screen: DetailsScreen,
       navigationOptions: {
         title: 'Details',
         headerLeft: null,      

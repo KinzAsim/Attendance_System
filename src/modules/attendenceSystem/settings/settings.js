@@ -182,9 +182,9 @@ const handleLearn = () => {
           {/* {date !== undefined ? 'Time changed event response:\n' : ''} */}
           {absentThreshold !== undefined ? absentThreshold.toTimeString() : ''}
         </Text>
-        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }}
+        <TouchableOpacity style={{justifyContent:'center', alignItems:'center', marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }}
           onPress={() => handleSubmitAttThreshold()}>
-          <Text style={{ marginHorizontal: wp('4%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('9%') }}>
+          <Text style={{   color: '#ff3d00', fontSize: 18 }}>
             Submit Times
                 </Text>
         </TouchableOpacity>
@@ -230,8 +230,8 @@ const handleLearn = () => {
             {checkOutTime !== undefined ? checkOutTime.toTimeString() : ''}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }} onPress={() => handleSubmitAutoMode()}>
-          <Text style={{ marginHorizontal: wp('4%'), marginTop: hp('2%'), color: '#ff3d00', fontSize: 18, paddingLeft: wp('9%') }}>
+        <TouchableOpacity style={{ justifyContent:'center',alignItems:'center',marginTop: hp('10%'), width: wp('50%'), height: hp('7%'), backgroundColor: '#fff', borderRadius: 15, marginLeft: wp('13%') }} onPress={() => handleSubmitAutoMode()}>
+          <Text style={{  color: '#ff3d00', fontSize: 18 }}>
             Submit Times
                 </Text>
         </TouchableOpacity>
