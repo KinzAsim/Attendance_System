@@ -264,7 +264,6 @@ export const Attthreshold = (late,absent) => (dispatch,getState) => new Promise(
         }
         try{
             const data = await axios.post(`${url}/attendance/checkAtt`,body,config)
-            console.log('action',data.data.data)
            dispatch({
                 type:'GET_ATTENDANCE',
                 payload:data.data.data

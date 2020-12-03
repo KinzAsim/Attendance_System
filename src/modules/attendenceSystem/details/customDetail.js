@@ -15,6 +15,7 @@ const buttons = ['PAST WEEK', 'PAST MONTH']
 LogBox.ignoreLogs(['VirtualizedLists should never be']);
 LogBox.ignoreLogs(['undefined is not an object (evaluating']);
 LogBox.ignoreLogs(['Animated:`useNativeDriver`was not']);
+LogBox.ignoreLogs(['DatePickerAndroid has been merged']);
 
 class DetailScreen extends React.Component{
   constructor(props){
@@ -50,7 +51,7 @@ class DetailScreen extends React.Component{
      })
     }
     if(employee[0].id !== undefined){
-        this.props.allAttendanceDetail(btnType,employee[0].id,startTime,endTime);
+        this.props.allAttendanceDetail('custom',employee[0].id,startTime,endTime);
      }
   }
 
@@ -80,11 +81,12 @@ class DetailScreen extends React.Component{
       selectedList: item.title,
       selectedListValue: item.value,
     });
-    if(btnType === 'week'){
-      this.props.allAttendanceDetail(btnType,employee[0].id); 
-    }else if(btnType === 'custom'){
-      this.props.allAttendanceDetail(btnType,employee[0].id,startTime,endTime); 
-    }     
+    this.props.allAttendanceDetail(btnType,employee[0].id,startTime,endTime); 
+    // if(btnType === 'week'){
+    //   this.props.allAttendanceDetail(btnType,employee[0].id); 
+    // }else if(btnType === 'custom'){
+    //   this.props.allAttendanceDetail(btnType,employee[0].id,startTime,endTime); 
+    // }     
   }
 
   startDateChange = (date) => {
@@ -110,6 +112,7 @@ class DetailScreen extends React.Component{
   render(){
     const {DATA,startTime,endTime,selectedListValue,employeesList,btnType} = this.state;
     const {allAttendance, allAttendanceLoading,employee_name,employees,empLoading} = this.props;
+    console.log(allAttendance)
 
     return(
     
@@ -146,9 +149,10 @@ class DetailScreen extends React.Component{
           <ScrollView>
             <FlatList                             
             data={ allAttendance }                               
-            renderItem={({item}) => <Item type={this.state.btnType} checkIn={item.checkIn} checkOut={item.checkOut} date={item.date} user_name={item.user_name} overtime={item.overtime} attendance={item.attendance}/>}
+            renderItem={({item}) => <Item attendance={item.attendance} checkIn={item.checkIn} checkOut={item.checkOut} date={item.date} overtime={item.overtime} user_name={item.user_name}   />}
             keyExtractor={(item, index) => index.toString()}
             />
+            {/* type={this.state.btnType} */}
             {/* {this.state.btnType === 'week' ? (
               <FlatList                             
               data={ allAttendance }                               

@@ -42,6 +42,22 @@ class HomeScreen extends React.Component {
     }
   }
 
+  componentDidMount (){
+    const{summary} = this.props;
+    console.log('summary',summary)
+
+    // let count = -1
+    // if(summary[0].status === 'absent'){
+    //   count++;
+    // }
+    // else if(summary[0].status === 'present'){
+    //   count++;
+    // }
+    // else if(summary[0].status === 'lates'){
+    //   count++;
+    // }
+  }
+
   onClick_Daily = () => {
     const{startTime,endTime}=this.state;
     this.setState({
@@ -72,9 +88,7 @@ class HomeScreen extends React.Component {
   // }
   render() {
     const state = this.state;
-    const {summary,summaryLoading,absents,lates,presents}= this.props;
-    //console.log('render',summary)
-
+    const {summary,summaryLoading,absents,lates,presents,status}= this.props;
 
     return (
       <View style={styles.container}>
@@ -85,11 +99,11 @@ class HomeScreen extends React.Component {
           <Divider style={{backgroundColor:'#000',marginRight:wp('2%'),marginBottom:hp('1%')}}/>
           <View style={{justifyContent:'space-between',flexDirection:'row'}}>
           <Text style={{fontSize:12,paddingRight:1,fontWeight:'bold'}}>Total Absent: </Text>
-          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>2</Text>
+          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>10</Text>
           <Text style={{fontSize:12,paddingRight:1,marginLeft:wp('1%'),fontWeight:'bold'}}>Total Present: </Text>
-          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>12</Text>
+          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>10</Text>
           <Text style={{fontSize:12,paddingRight:5,marginLeft:wp('1%'),fontWeight:'bold'}}>Total Late: </Text>
-          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>1</Text>
+          <Text style={{fontSize:12,paddingRight:5,color:'#E64A19'}}>10</Text>
           </View>
           <TouchableOpacity style={[styles.btn, { marginTop: hp('3%') }]} onPress={() => this.onClick_Daily()}>
           <Text style={styles.btnText}>DAILY SUMMARY</Text>

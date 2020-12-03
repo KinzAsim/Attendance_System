@@ -50,6 +50,7 @@ class DetailsScreen extends React.Component{
       employeesList:temp,
       selectedListValue:temp[0].value
      });
+     this.props.allAttendanceDetail('week',employee[0].id); 
     }
    
     const employee = employees.filter(e => e.name === selectedListValue);
@@ -72,7 +73,6 @@ class DetailsScreen extends React.Component{
   //         btnType: 'custom',
   //       });
   //     }
-
   //     if(btnType === 'week'){
   //       this.props.allAttendanceDetail(btnType,employee[0].id); 
   //     }else if(btnType === 'custom'){
@@ -88,20 +88,15 @@ class DetailsScreen extends React.Component{
       selectedList: item.title,
       selectedListValue: item.value,
     });
-
-   
-      this.props.allAttendanceDetail('week',employee[0].id); 
-   
-     
+      this.props.allAttendanceDetail('week',employee[0].id);    
   }
 
   render(){
     const {DATA,startTime,endTime,selectedListValue,employeesList,btnType} = this.state;
     const {allAttendance, allAttendanceLoading,employee_name,employees} = this.props;
-    // console.log('week',allAttendance);
+    
 
     return(
-      
       <View style={{backgroundColor:'#fff',flex:1,
           borderRadius:30,paddingBottom:hp('5%'),paddingTop:hp('5%'),elevation:20}}>
         <View style={{justifyContent:'center',alignItems:'center'}}>  
@@ -134,7 +129,7 @@ class DetailsScreen extends React.Component{
             
               <FlatList                             
               data={ allAttendance }                               
-              renderItem={({item}) => <Item type={this.state.btnType} checkIn={item.checkIn} checkOut={item.checkOut} day={item.day} user_name={item.user_name} overtime={item.overtime} attendance={item.attendance}/>}
+              renderItem={({item}) => <Item  attendance={item.attendance} checkIn={item.checkIn} checkOut={item.checkOut} day={item.day} overtime={item.overtime} user_name={item.user_name}  />}
               keyExtractor={(item, index) => index.toString()}
               />
              
